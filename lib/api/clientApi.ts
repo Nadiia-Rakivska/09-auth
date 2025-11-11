@@ -37,8 +37,8 @@ export const deleteNote = async (id: string): Promise<Note> => {
   return response.data;
 };
 
-export const register = async (loginData: RegisterData): Promise<User> => {
-  const { data } = await api.post<User>(`/auth/register`, loginData);
+export const register = async (registerData: RegisterData) => {
+  const { data } = await api.post<User>(`/auth/register`, registerData);
   return data;
 };
 export const login = async (loginData: RegisterData) => {
@@ -46,8 +46,8 @@ export const login = async (loginData: RegisterData) => {
   return data;
 };
 
-export const getMe = async (): Promise<User> => {
-  const { data } = await api.get(`/users/me`);
+export const getMe = async () => {
+  const { data } = await api.get<User>(`/users/me`);
   return data;
 };
 export const logout = async () => {
@@ -59,6 +59,8 @@ export const checkSession = async () => {
   const res = await api.get<CheckSession>("/auth/session");
   return res.data.success;
 };
+
+
 export const updateProfile = async (data: RegisterData) => {
   const res = await api.patch<User>(`/users/me`, data);
   return res.data;

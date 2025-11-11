@@ -4,7 +4,7 @@ import { useState } from "react";
 import css from "./SignInPage.module.css";
 import { useRouter } from "next/navigation";
 import { RegisterData } from "@/lib/api/api";
-import { login } from "@/lib/api/clientApi";
+import { getMe, login } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import { isAxiosError } from "axios";
 
@@ -17,10 +17,13 @@ export default function SignIn() {
     try {
       const userData = Object.fromEntries(formData) as unknown as RegisterData;
       const user = await login(userData);
+if (user) {
+  setUser(user);
+ 
 
-      setUser(user);
-
-      router.push("/profile");
+      // router.push("/profile");
+}
+     
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         setError(error.response.data.message);

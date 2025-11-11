@@ -1,11 +1,5 @@
-
 import css from "./page.module.css"
-
-
 export default async function HomePage() {
-
-  
-
   return (
     <main>
       <div className={css.container}>

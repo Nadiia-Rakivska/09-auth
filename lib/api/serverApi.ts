@@ -5,9 +5,9 @@ import { CheckSession, NotesHttpResponse } from "./api";
 
 
 
-export const getMe = async (): Promise<User> => {
+export const getMe = async () => {
   const cookieStore = await cookies();
-  const { data } = await api.get(`/users/me`, {
+  const { data } = await api.get<User>(`/users/me`, {
     headers: {
       Cookie: cookieStore.toString(),
     },

@@ -13,12 +13,10 @@ export default function Header() {
           <li>
             <Link href="/">Home</Link>
           </li>
-          <li>
-            <Link href="/notes/filter/all">Notes</Link>
-          </li>
+         
 
         </ul>
-        <ul><AuthNavigation/></ul>
+        <ul className={ css.navigation}><AuthNavigation/></ul>
       </nav>
     </header>
   );

@@ -24,7 +24,9 @@ export default function AuthNavigation() {
   if (isAuthenticated && user) {
     return (
       <>
-        {" "}
+       <li>
+          <Link href="/notes/filter/all">Notes</Link>
+        </li>
         <li className={css.navigationItem}>
           <Link href="/profile" prefetch={false} className={css.navigationLink}>
             Profile

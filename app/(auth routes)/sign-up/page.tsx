@@ -6,25 +6,21 @@ import { isAxiosError } from "axios";
 import { register } from "@/lib/api/clientApi";
 import { RegisterData } from "@/lib/api/api";
 import { useAuthStore } from "@/lib/store/authStore";
+import { ApiError } from "next/dist/server/api-utils";
 
 export default function Register() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const setUser = useAuthStore((state) => state.setUser);
-
-
-
   const handleSubmit = async (formData: FormData) => {
     try {
       const userData = Object.fromEntries(formData) as unknown as RegisterData;
       const user = await register(userData);
-
-      setUser(user);
-     
-      
+      if (user) {
+         setUser(user);
       router.push("/profile");
-
-
+      }
+     
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         setError(error.response.data.message);
@@ -33,9 +29,6 @@ export default function Register() {
       }
     }
   }
-
-
-
 
   return (
     <main className={css.mainContent}>
