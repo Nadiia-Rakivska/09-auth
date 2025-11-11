@@ -6,6 +6,7 @@ import { IMG_URL, SITE_URL } from "@/lib/constants";
 import { Metadata } from "next";
 import { getMe } from "@/lib/api/serverApi";
 
+
 export const metadata: Metadata = {
   title: "User Profile | NoteHub",
   description: "View and manage your NoteHub profile. Update personal details, view account information, and manage your notes in one place.",
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
 
 export default async function Profile() {
   const data = await getMe();
+  
 
 
   return (

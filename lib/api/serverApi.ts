@@ -4,18 +4,16 @@ import { cookies } from "next/headers";
 import { CheckSession, NotesHttpResponse } from "./api";
 
 
-// checkSession.
+
 export const getMe = async (): Promise<User> => {
   const cookieStore = await cookies();
   const { data } = await api.get(`/users/me`, {
     headers: {
       Cookie: cookieStore.toString(),
-    }
+    },
   });
   return data;
 };
-
-
 export const fetchNotes = async (
   topic: string,
   page: number,
@@ -66,5 +64,5 @@ export const checkSession = async () => {
       Cookie: cookieStore.toString(),
     }
   })
-  return res.data.success
+  return res
 }

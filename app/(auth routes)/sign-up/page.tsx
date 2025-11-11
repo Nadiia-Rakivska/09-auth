@@ -1,8 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 import css from "./SignUpPage.module.css";
-import { register, RegisterData } from "@/lib/api/api";
 import { useState } from "react";
+
+import { register } from "@/lib/api/clientApi";
+import { RegisterData } from "@/lib/api/api";
 import { useAuthStore } from "@/lib/store/authStore";
 
 export default function Register() {

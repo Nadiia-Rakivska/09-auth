@@ -1,27 +1,27 @@
 "use client"
-import { getMe } from "@/lib/api/clientApi"
+
+import { getMe } from "@/lib/api/clientApi";
 import css from "./EditProfilePage.module.css"
 import Image from 'next/image';
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 export default function EditProfile() {
-  // useEffect(() => {
-  //   const data = await getMe();
-  //   });
-  // useEffect()
-
-  // const data = await getMe();
+  const router = useRouter();
 
 
+
+  const handleCancel = () => {
+    router.push("/profile");
+  };
   return (<main className={css.mainContent}>
     <div className={css.profileCard}>
       <h1 className={css.formTitle}>Edit Profile</h1>
 
-      <Image src={data.avatar}
+      {/* <Image src={data.avatar}
         alt="User Avatar"
         width={120}
         height={120}
         className={css.avatar}
-      />
+      /> */}
 
       <form className={css.profileInfo}>
         <div className={css.usernameWrapper}>
@@ -38,7 +38,7 @@ export default function EditProfile() {
           <button type="submit" className={css.saveButton}>
             Save
           </button>
-          <button type="button" className={css.cancelButton}>
+          <button type="button" onClick={handleCancel} className={css.cancelButton}>
             Cancel
           </button>
         </div>

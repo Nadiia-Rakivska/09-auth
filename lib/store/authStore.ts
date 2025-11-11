@@ -1,21 +1,26 @@
-import { User } from '@/types/note';
-import { create } from 'zustand';
+import { User } from "@/types/note";
+import { create } from "zustand";
 
 
-type AuthStore = {
-  isAuthenticated: boolean;
+export interface AuthProps {
   user: User | null;
+  isAuthenticated: boolean;
   setUser: (user: User) => void;
   clearIsAuthenticated: () => void;
-};
+}
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  isAuthenticated: false,
+export const useAuthStore = create<AuthProps>()((set) => ({
   user: null,
-  setUser: (user: User) => {
-    set(() => ({ user, isAuthenticated: true }));
-  },
-  clearIsAuthenticated: () => {
-    set(() => ({ user: null, isAuthenticated: false }));
-  },
+  isAuthenticated: false,
+
+  setUser: (user) =>
+    set({
+      user,
+      isAuthenticated: true,
+    }),
+  clearIsAuthenticated: () =>
+    set({
+      user: null,
+      isAuthenticated: false,
+    }),
 }));

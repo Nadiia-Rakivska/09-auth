@@ -19,6 +19,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       if (isAuthenticated) {
 
         const user = await getMe();
+        console.log(user);
+        
         if (user) setUser(user);
       } else {
         clearIsAuthenticated();
