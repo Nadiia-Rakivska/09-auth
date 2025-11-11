@@ -14,6 +14,7 @@ export const getMe = async (): Promise<User> => {
   });
   return data;
 };
+
 export const fetchNotes = async (
   topic: string,
   page: number,

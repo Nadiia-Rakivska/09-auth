@@ -28,9 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Profile() {
-  const data = await getMe();
-  
-
+  const user = await getMe();
 
   return (
     <main className={css.mainContent}>
@@ -42,17 +40,19 @@ export default async function Profile() {
           </Link>
         </div>
         <div className={css.avatarWrapper}>
-          <Image
-            src={data.avatar}
-            alt="User Avatar"
-            width={120}
-            height={120}
-            className={css.avatar}
-          />
+          {user.avatar && (
+            <Image
+              src={user.avatar}
+              alt="User Avatar"
+              width={120}
+              height={120}
+              className={css.avatar}
+            />
+          )}
         </div>
         <div className={css.profileInfo}>
-          <p>Username: {data.username}</p>
-          <p>Email: {data.email}</p>
+          <p>Username: {user?.username}</p>
+          <p>Email: {user?.email}</p>
         </div>
       </div>
     </main>

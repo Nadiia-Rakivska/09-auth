@@ -2,30 +2,40 @@
 import { useRouter } from "next/navigation";
 import css from "./SignUpPage.module.css";
 import { useState } from "react";
-
+import { isAxiosError } from "axios";
 import { register } from "@/lib/api/clientApi";
 import { RegisterData } from "@/lib/api/api";
 import { useAuthStore } from "@/lib/store/authStore";
 
 export default function Register() {
   const router = useRouter();
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const setUser = useAuthStore((state) => state.setUser);
 
-  const handleSubmit = async (formdata: FormData) => {
+
+
+  const handleSubmit = async (formData: FormData) => {
     try {
-      const userdata = Object.fromEntries(formdata) as unknown as RegisterData;
-      const res = await register(userdata);
-      if (res) {
-        setUser(res);
-        router.push("/profile");
+      const userData = Object.fromEntries(formData) as unknown as RegisterData;
+      const user = await register(userData);
+
+      setUser(user);
+     
+      
+      router.push("/profile");
+
+
+    } catch (error) {
+      if (isAxiosError(error) && error.response) {
+        setError(error.response.data.message);
       } else {
-        setError("Invalid email or password");
+        setError("An unexpected error occurred");
       }
-    } catch {
-      setError("Oops... some error");
     }
-  };
+  }
+
+
+
 
   return (
     <main className={css.mainContent}>
