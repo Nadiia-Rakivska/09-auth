@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "User Profile | NoteHub",
     description:
       "Manage your NoteHub account settings and profile information. Stay organized and productive with NoteHub.",
-    url: SITE_URL,
+    url: SITE_URL+"/profile",
 
     images: [
       {
