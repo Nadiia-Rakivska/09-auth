@@ -1,30 +1,26 @@
-"use client"
-import Link from "next/link"
-import css from "./AuthNavigation.module.css"
-import { logout } from "@/lib/api/clientApi"
+"use client";
+import Link from "next/link";
+import css from "./AuthNavigation.module.css";
+import { logout } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 
 export default function AuthNavigation() {
-
   const router = useRouter();
-  // Отримуємо поточну сесію та юзера
   const { isAuthenticated, user } = useAuthStore();
-  // Отримуємо метод очищення глобального стану
   const clearIsAuthenticated = useAuthStore(
-    (state) => state.clearIsAuthenticated,
+    (state) => state.clearIsAuthenticated
   );
 
   const handleLogout = async () => {
-    
     await logout();
     clearIsAuthenticated();
-    router.push('/sign-in');
+    router.push("/sign-in");
   };
   if (isAuthenticated && user) {
     return (
       <>
-       <li>
+        <li className={css.navigationItem}>
           <Link href="/notes/filter/all">Notes</Link>
         </li>
         <li className={css.navigationItem}>

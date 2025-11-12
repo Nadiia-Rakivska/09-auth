@@ -2,11 +2,9 @@
 import { useRouter } from "next/navigation";
 import css from "./SignUpPage.module.css";
 import { useState } from "react";
-import { isAxiosError } from "axios";
 import { register } from "@/lib/api/clientApi";
-import { RegisterData } from "@/lib/api/api";
 import { useAuthStore } from "@/lib/store/authStore";
-import { ApiError } from "next/dist/server/api-utils";
+import { RegisterLoginData } from "@/types/user";
 
 export default function Register() {
   const router = useRouter();
@@ -14,21 +12,18 @@ export default function Register() {
   const setUser = useAuthStore((state) => state.setUser);
   const handleSubmit = async (formData: FormData) => {
     try {
-      const userData = Object.fromEntries(formData) as unknown as RegisterData;
+      const userData = Object.fromEntries(
+        formData
+      ) as unknown as RegisterLoginData;
       const user = await register(userData);
       if (user) {
-         setUser(user);
-      router.push("/profile");
+        setUser(user);
+        router.push("/profile");
       }
-     
-    } catch (error) {
-      if (isAxiosError(error) && error.response) {
-        setError(error.response.data.message);
-      } else {
-        setError("An unexpected error occurred");
-      }
+    } catch {
+      setError("Oops... some error");
     }
-  }
+  };
 
   return (
     <main className={css.mainContent}>

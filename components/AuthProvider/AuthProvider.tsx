@@ -18,6 +18,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const getUser = async () => {
       try {
         const isAuthenticated = await checkSession();
+
         if (isAuthenticated) {
           const user = await getMe();
           if (user) setUser(user);
