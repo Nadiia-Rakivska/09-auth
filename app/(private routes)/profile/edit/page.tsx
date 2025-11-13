@@ -8,16 +8,18 @@ import { useEffect, useState } from "react";
 
 import { isAxiosError } from "axios";
 import { User } from "@/types/user";
+import { useAuthStore } from "@/lib/store/authStore";
 
 export default function EditProfile() {
-  const [user, setUser] = useState<User | null>(null);
+  const [userEdit, setUserEdit] = useState<User | null>(null);
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const data = await getMe();
         if (data) {
-          setUser(data);
+          setUserEdit(data);
         }
       } catch (error) {
         console.error("Failed to fetch user:", error);
@@ -26,27 +28,24 @@ export default function EditProfile() {
     fetchUser();
   }, []);
 
-
   const handleCancel = () => {
     router.push("/profile");
   };
   const [error, setError] = useState<string | null>(null);
   const handleSubmit = async (formData: FormData) => {
-
     try {
       const username = formData.get("username") as string;
 
-      if (user?.email) {
-        console.log(username, user.email);
+      if (userEdit?.email) {
+        const updatedUser = await updateProfile({
+          email: userEdit?.email,
+          username: username,
+        });
 
-        await updateProfile({ email: user?.email, username: username });
+        setUser(updatedUser);
 
- 
-
-
-      router.push("/profile");
-}
-     
+        router.push("/profile");
+      }
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         setError(error.response.data.message);
@@ -54,22 +53,14 @@ export default function EditProfile() {
         setError("An unexpected error occurred");
       }
     }
-
-   
-
-
-
-      
-    
-    
-  }
+  };
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
         <h1 className={css.formTitle}>Edit Profile</h1>
-        {user?.avatar && (
+        {userEdit?.avatar && (
           <Image
-            src={user?.avatar}
+            src={userEdit?.avatar}
             alt="User Avatar"
             width={120}
             height={120}
@@ -85,11 +76,11 @@ export default function EditProfile() {
               id="username"
               type="text"
               className={css.input}
-              defaultValue={user?.username}
+              defaultValue={userEdit?.username}
             />
           </div>
 
-          <p>Email: { user?.email}</p>
+          <p>Email: {userEdit?.email}</p>
 
           <div className={css.actions}>
             <button type="submit" className={css.saveButton}>
